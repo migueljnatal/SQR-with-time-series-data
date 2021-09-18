@@ -1,4 +1,4 @@
-setwd("C:/Users/Miguel/OneDrive - UFRGS/Mestrado PPGEst/DISSERTAÇÃO/Novas Simulações")
+setwd("C:/Users/MIGUEL/OneDrive - UFRGS/Mestrado PPGEst/DISSERTAÇÃO/Novas Simulações")
 
 start_time = Sys.time()
 #install.packages('Rfast')
