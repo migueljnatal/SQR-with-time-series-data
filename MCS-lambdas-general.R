@@ -1,4 +1,4 @@
-setwd("C:/Users/Miguel/OneDrive - UFRGS/Mestrado PPGEst/DISSERTAÇÃO/Novas Simulações")
+setwd("C:/Users/Miguel/OneDrive - UFRGS/Mestrado PPGEst/DISSERTAÃ‡ÃƒO/Novas SimulaÃ§Ãµes")
 
 start_time = Sys.time()
 #install.packages('Rfast')
@@ -88,14 +88,14 @@ alpha0 = v00_u
 alpha1 = function(tau) v10(tau) - v00_u(tau)
 theta1 = function(tau) v01(tau) - v00_u(tau)
 
-# Quantile function of Y given â„±[t-1]
+# Quantile function of Y given Ã¢â€žÂ±[t-1]
 Q = function(tau,Y.current,Z.current){
   alpha0(tau) + alpha1(tau)*Y.current + theta1(tau)*Z.current
 }
 
 # Simulating the sample paths:
 
-A = array(0, dim = c(length(tau.grid), 3, nrep))           # arrays for storing the simulated coef; A stands for rq, B & C for conquer 
+A = array(0, dim = c(length(tau.grid), 3, nrep))           # arrays for storing the simulated coef; A stands for rq and C for conquer 
 B = array(0, dim = c(length(tau.grid), 3, nrep))
 C = array(0, dim = c(length(tau.grid), 3, nrep))
 C2 = array(0, dim = c(length(tau.grid), 3, nrep))
@@ -153,7 +153,7 @@ for(j in 1:nrep){
   Y.current[[j]] = Y[[j]][t]
 
  }
-  burn = 100                     # discarding the 1st 100 observations, as Galvao et al do in their paper
+  burn = 100                     # discarding the 1st 100 observations
   Y[[j]] = Y[[j]][(burn+1):T]
   Z[[j]] = Z[[j]][(burn+1):T]
   Y[[j]] = Y[[j]][-1]
@@ -184,7 +184,7 @@ for(j in 1:nrep){
   sigma_z = min(sd(z), ((iqr_z)/1.34898))
   h[i,j] = h_scale*(1.06*sigma_z)/(length(Yvec[[j]])^(1/5))
   
-  # Demais niveis de $\eta$ = h 'rule of thumb' como no paper do Artur
+  # Demais niveis de $\zeta$ = h 'rule of thumb' como no paper do Artur
   h_3[i,j]        = h[i,j]/4
   h_2[i,j]        = h[i,j]/2
   h2[i,j]         = h[i,j]*2
@@ -227,7 +227,6 @@ for(j in 1:nrep){
 # Functional parameters estimation 
 
 # BIAS
-
 alphas0_rq_bias = c()
 alphas0_cq_bias = c()
 alphas1_rq_bias = c()
@@ -267,9 +266,8 @@ thetas1_cq8_bias = c()
 # alphas0_cq_8_bias = c()      
 # alphas1_cq_8_bias = c()
 # thetas1_cq_8_bias = c()
-# 
- # MSE
 
+# MSE
 alphas0_rq_mse = c()
 alphas0_cq_mse = c()
 alphas1_rq_mse = c()
@@ -310,15 +308,10 @@ thetas1_cq8_mse = c()
 # alphas1_cq_8_mse = c()
 # thetas1_cq_8_mse = c()
 
-# a0mse_rq = c()
-# a0mse_cq = c()
-
 real_alpha0 = sapply(tau.grid, alpha0)
 #real_alpha1 = 0
 real_alpha1 = sapply(tau.grid, alpha1)
-real_theta1 = sapply(tau.grid, theta1) 
-
-alphas0_rq_global = c()
+real_theta1 = sapply(tau.grid, theta1)
 
 
 for(s in 1:length(tau.grid)){
@@ -572,15 +565,15 @@ for(g in 1:length(tau.grid)){
 
 # Final plots - alphas0 (alpha_0), alpha_1, beta_1 & beta_2  - MEAN per quantile - - h, h*2, h*4, h*1/4, h*1/2
 
-coefs_alphas0_mpq = data.frame(alphas0_rq_mpq, alphas0_cq_mpq, 
-                               alphas0_cq2_mpq,alphas0_cq3_mpq,alphas0_cq_3_mpq,alphas0_cq_2_mpq,
-                               alphas0_cq8_mpq,alphas0_cq16_mpq,alphas0_cq_16_mpq,alphas0_cq_8_mpq) 
-coefs_alphas1_mpq = data.frame(alphas1_rq_mpq, alphas1_cq_mpq, 
-                               alphas1_cq2_mpq,alphas1_cq3_mpq,alphas1_cq_3_mpq,alphas1_cq_2_mpq,
-                               alphas1_cq8_mpq,alphas1_cq16_mpq,alphas1_cq_16_mpq,alphas1_cq_8_mpq) 
-coefs_thetas1_mpq = data.frame(thetas1_rq_mpq, thetas1_cq_mpq,
-                               thetas1_cq2_mpq,thetas1_cq3_mpq,thetas1_cq_3_mpq,thetas1_cq_2_mpq,
-                               thetas1_cq8_mpq,thetas1_cq16_mpq,thetas1_cq_16_mpq,thetas1_cq_8_mpq)
+# coefs_alphas0_mpq = data.frame(alphas0_rq_mpq, alphas0_cq_mpq, 
+#                                alphas0_cq2_mpq,alphas0_cq3_mpq,alphas0_cq_3_mpq,alphas0_cq_2_mpq,
+#                                alphas0_cq8_mpq,alphas0_cq16_mpq,alphas0_cq_16_mpq,alphas0_cq_8_mpq) 
+# coefs_alphas1_mpq = data.frame(alphas1_rq_mpq, alphas1_cq_mpq, 
+#                                alphas1_cq2_mpq,alphas1_cq3_mpq,alphas1_cq_3_mpq,alphas1_cq_2_mpq,
+#                                alphas1_cq8_mpq,alphas1_cq16_mpq,alphas1_cq_16_mpq,alphas1_cq_8_mpq) 
+# coefs_thetas1_mpq = data.frame(thetas1_rq_mpq, thetas1_cq_mpq,
+#                                thetas1_cq2_mpq,thetas1_cq3_mpq,thetas1_cq_3_mpq,thetas1_cq_2_mpq,
+#                                thetas1_cq8_mpq,thetas1_cq16_mpq,thetas1_cq_16_mpq,thetas1_cq_8_mpq)
 
 # xlab = TeX('$\\tau$')
 # 
@@ -652,287 +645,6 @@ coefs_thetas1_mpq = data.frame(thetas1_rq_mpq, thetas1_cq_mpq,
 # print(grafico_beta1_mpq)
 
 #plot_grid(grafico_alpha0_mpq,grafico_alpha1_mpq,grafico_beta1_mpq,grafico_beta2_mpq)
-
-# #### PLOTS MSE
-# 
-# mse_coefs = data.frame(cbind(alphas0_rq_mse,alphas0_cq_mse,
-#                              alphas0_cq2_mse,alphas0_cq3_mse,alphas0_cq_3_mse,alphas0_cq_2_mse,
-#                              alphas0_cq8_mse,alphas0_cq16_mse,alphas0_cq_16_mse,alphas0_cq_8_mse))
-# ylab = TeX('MSE $\\hat{\\alpha_0}(\\tau)$')
-# grafico_alphas0_mse = ggplot(mse_coefs, aes(x = tau.grid, y = value)) + 
-#   geom_line(aes(y = alphas0_rq_mse,linetype ='blank',color ='QR'),size=1.0) +
-#   geom_line(aes(y = alphas0_cq_mse,linetype ='solid',color ='SQR'),size=1.0)+
-#   geom_line(aes(y = alphas0_cq2_mse,linetype ='dotdash',color ='SQR_h*2'),size=1.0)+
-#   geom_line(aes(y = alphas0_cq3_mse,linetype ='dotdash',color ='SQR_h*4'),size=1.0)+
-#   geom_line(aes(y = alphas0_cq_3_mse,linetype ='dotdash',color ='SQR_h/4'),size=1.0)+
-#   geom_line(aes(y = alphas0_cq_2_mse,linetype ='dotted',color ='SQR_h/2'),size=1.0)+
-#   geom_line(aes(y = alphas0_cq8_mse,linetype ='dotdash',color ='SQR_h*8'),size=1.0)+
-#   geom_line(aes(y = alphas0_cq16_mse,linetype ='dotdash',color ='SQR_h*16'),size=1.0)+
-#   geom_line(aes(y = alphas0_cq_16_mse,linetype ='dotdash',color ='SQR_h/16'),size=1.0)+
-#   geom_line(aes(y = alphas0_cq_8_mse,linetype ='dotted',color ='SQR_h/8'),size=1.0)+
-#   geom_hline(yintercept = 0.0, color = 'yellow', size=1.3) +
-#   labs(x =xlab,y = ylab)  + 
-#   scale_x_continuous(breaks=seq(0.01, 0.99, 0.07),limits = c(0.01, 0.99))  + 
-#   #scale_y_log10(labels = trans_format("log10", math_format(10^.x))) + 
-#   scale_y_log10() + # Log-scale
-#   theme_grey() + guides(linetype = FALSE) +
-#   theme(plot.title = element_text(size = 15),
-#         legend.title = element_blank(),
-#         legend.text = element_text(size = 12),
-#         axis.title = element_text(size = 14))
-# print(grafico_alphas0_mse)
-# 
-# mse_coefs = data.frame(cbind(alphas1_rq_mse,alphas1_cq_mse,
-#                              alphas1_cq2_mse,alphas1_cq3_mse,alphas1_cq_3_mse,alphas1_cq_2_mse,
-#                              alphas1_cq8_mse,alphas1_cq16_mse,alphas1_cq_16_mse,alphas1_cq_8_mse))
-# ylab = TeX('MSE $\\hat{\\alpha_1}(\\tau)$')
-# grafico_alphas1_mse = ggplot(mse_coefs, aes(x = tau.grid, y = value)) + 
-#   geom_line(aes(y = alphas1_rq_mse,linetype ='blank',color ='QR'),size=1.0) +
-#   geom_line(aes(y = alphas1_cq_mse,linetype ='solid',color ='SQR'),size=1.0)+
-#   geom_line(aes(y = alphas1_cq2_mse,linetype ='dotdash',color ='SQR_h*2'),size=1.0)+
-#   geom_line(aes(y = alphas1_cq3_mse,linetype ='dotdash',color ='SQR_h*4'),size=1.0)+
-#   geom_line(aes(y = alphas1_cq_3_mse,linetype ='dotdash',color ='SQR_h/4'),size=1.0)+
-#   geom_line(aes(y = alphas1_cq_2_mse,linetype ='dotted',color ='SQR_h/2'),size=1.0)+
-#   geom_line(aes(y = alphas1_cq8_mse,linetype ='dotdash',color ='SQR_h*8'),size=1.0)+
-#   geom_line(aes(y = alphas1_cq16_mse,linetype ='dotdash',color ='SQR_h*16'),size=1.0)+
-#   geom_line(aes(y = alphas1_cq_16_mse,linetype ='dotdash',color ='SQR_h/16'),size=1.0)+
-#   geom_line(aes(y = alphas1_cq_8_mse,linetype ='dotted',color ='SQR_h/8'),size=1.0)+
-#   geom_hline(yintercept = 0.0, color = 'yellow', size=1.3) +
-#   labs(x =xlab,y = ylab)  + 
-#   scale_x_continuous(breaks=seq(0.01, 0.99, 0.07),limits = c(0.01, 0.99))  + 
-#   scale_y_log10() + # Log-scale
-#   #scale_y_log10(labels = trans_format("log10", math_format(10^.x))) + 
-#   theme_grey() + guides(linetype = FALSE) +
-#   theme(plot.title = element_text(size = 15),
-#         legend.title = element_blank(),
-#         legend.text = element_text(size = 12),
-#         axis.title = element_text(size = 14))
-# print(grafico_alphas1_mse)
-# 
-# mse_coefs = data.frame(cbind(thetas1_rq_mse,thetas1_cq_mse,
-#                              thetas1_cq2_mse,thetas1_cq3_mse,thetas1_cq_3_mse,thetas1_cq_2_mse,
-#                              thetas1_cq8_mse,thetas1_cq16_mse,thetas1_cq_16_mse,thetas1_cq_8_mse))
-# ylab = TeX('MSE $\\hat{\\theta_1}(\\tau)$')
-# grafico_thetas1_mse = ggplot(mse_coefs, aes(x = tau.grid, y = value)) + 
-#   geom_line(aes(y = thetas1_rq_mse,linetype ='blank',color ='QR'),size=1.0) +
-#   geom_line(aes(y = thetas1_cq_mse,linetype ='solid',color ='SQR'),size=1.0)+
-#   geom_line(aes(y = thetas1_cq2_mse,linetype ='dotdash',color ='SQR_h*2'),size=1.0)+
-#   geom_line(aes(y = thetas1_cq3_mse,linetype ='dotdash',color ='SQR_h*4'),size=1.0)+
-#   geom_line(aes(y = thetas1_cq_3_mse,linetype ='dotdash',color ='SQR_h/4'),size=1.0)+
-#   geom_line(aes(y = thetas1_cq_2_mse,linetype ='dotted',color ='SQR_h/2'),size=1.0)+
-#   geom_line(aes(y = thetas1_cq8_mse,linetype ='dotdash',color ='SQR_h*8'),size=1.0)+
-#   geom_line(aes(y = thetas1_cq16_mse,linetype ='dotdash',color ='SQR_h*16'),size=1.0)+
-#   geom_line(aes(y = thetas1_cq_16_mse,linetype ='dotdash',color ='SQR_h/16'),size=1.0)+
-#   geom_line(aes(y = thetas1_cq_8_mse,linetype ='dotted',color ='SQR_h/8'),size=1.0)+
-#   geom_hline(yintercept = 0.0, color = 'yellow', size=1.3) +
-#   labs(x =xlab,y = ylab)  + 
-#   scale_x_continuous(breaks=seq(0.01, 0.99, 0.07),limits = c(0.01, 0.99))  + 
-#   scale_y_log10() + # Log-scale
-#   #scale_y_log10(labels = trans_format("log10", math_format(10^.x))) + 
-#   theme_grey() + guides(linetype = FALSE) +
-#   theme(plot.title = element_text(size = 15),
-#         legend.title = element_blank(),
-#         legend.text = element_text(size = 12),
-#         axis.title = element_text(size = 14))
-# print(grafico_thetas1_mse)
-# #plot_grid(grafico_alphas0_mse,grafico_alphas1_mse,grafico_thetas1_mse,grafico_betas2_mse)
-# 
-# #### PLOTS BIAS
-# 
-# bias_coefs = data.frame(cbind(alphas0_rq_bias,alphas0_cq_bias,
-#                               alphas0_cq2_bias,alphas0_cq3_bias,alphas0_cq_3_bias,alphas0_cq_2_bias,
-#                               alphas0_cq8_bias,alphas0_cq16_bias,alphas0_cq_16_bias,alphas0_cq_8_bias))
-# ylab = TeX('Bias $\\hat{\\alpha_0}(\\tau)$')
-# grafico_alphas0_bias = ggplot(bias_coefs, aes(x = tau.grid, y = value)) + 
-#   geom_line(aes(y = alphas0_rq_bias,linetype ='blank',color ='QR'),size=1.0) +
-#   geom_line(aes(y = alphas0_cq_bias,linetype ='solid',color ='SQR'),size=1.0)+
-#   geom_line(aes(y = alphas0_cq2_bias,linetype ='dotdash',color ='SQR_h*2'),size=1.0)+
-#   geom_line(aes(y = alphas0_cq3_bias,linetype ='dotdash',color ='SQR_h*4'),size=1.0)+
-#   geom_line(aes(y = alphas0_cq_3_bias,linetype ='dotdash',color ='SQR_h/4'),size=1.0)+
-#   geom_line(aes(y = alphas0_cq_2_bias,linetype ='dotted',color ='SQR_h/2'),size=1.0)+
-#   geom_line(aes(y = alphas0_cq8_bias,linetype ='dotdash',color ='SQR_h*8'),size=1.0)+
-#   geom_line(aes(y = alphas0_cq16_bias,linetype ='dotdash',color ='SQR_h*16'),size=1.0)+
-#   geom_line(aes(y = alphas0_cq_16_bias,linetype ='dotdash',color ='SQR_h/16'),size=1.0)+
-#   geom_line(aes(y = alphas0_cq_8_bias,linetype ='dotted',color ='SQR_h/8'),size=1.0)+
-#   geom_hline(yintercept = 0.0, color = 'yellow', size=1.3) +
-#   labs(x =xlab,y = ylab)  + 
-#   scale_x_continuous(breaks=seq(0.01, 0.99, 0.07),limits = c(0.01, 0.99))  + 
-#   theme_grey() + guides(linetype = FALSE) +
-#   theme(plot.title = element_text(size = 15),
-#         legend.title = element_blank(),
-#         legend.text = element_text(size = 12),
-#         axis.title = element_text(size = 14))
-# print(grafico_alphas0_bias)
-# 
-# bias_coefs = data.frame(cbind(alphas1_rq_bias,alphas1_cq_bias,
-#                               alphas1_cq2_bias,alphas1_cq3_bias,alphas1_cq_3_bias,alphas1_cq_2_bias,
-#                               alphas1_cq8_bias,alphas1_cq16_bias,alphas1_cq_16_bias,alphas1_cq_8_bias))
-# ylab = TeX('Bias $\\hat{\\alpha_1}(\\tau)$')
-# grafico_alphas1_bias = ggplot(bias_coefs, aes(x = tau.grid, y = value)) + 
-#   geom_line(aes(y = alphas1_rq_bias,linetype ='blank',color ='QR'),size=1.0) +
-#   geom_line(aes(y = alphas1_cq_bias,linetype ='solid',color ='SQR'),size=1.0)+
-#   geom_line(aes(y = alphas1_cq2_bias,linetype ='dotdash',color ='SQR_h*2'),size=1.0)+
-#   geom_line(aes(y = alphas1_cq3_bias,linetype ='dotdash',color ='SQR_h*4'),size=1.0)+
-#   geom_line(aes(y = alphas1_cq_3_bias,linetype ='dotdash',color ='SQR_h/4'),size=1.0)+
-#   geom_line(aes(y = alphas1_cq_2_bias,linetype ='dotted',color ='SQR_h/2'),size=1.0)+
-#   geom_line(aes(y = alphas1_cq8_bias,linetype ='dotdash',color ='SQR_h*8'),size=1.0)+
-#   geom_line(aes(y = alphas1_cq16_bias,linetype ='dotdash',color ='SQR_h*16'),size=1.0)+
-#   geom_line(aes(y = alphas1_cq_16_bias,linetype ='dotdash',color ='SQR_h/16'),size=1.0)+
-#   geom_line(aes(y = alphas1_cq_8_bias,linetype ='dotted',color ='SQR_h/8'),size=1.0)+
-#   geom_hline(yintercept = 0.0, color = 'yellow', size=1.3) +
-#   labs(x =xlab,y = ylab)  + 
-#   scale_x_continuous(breaks=seq(0.01, 0.99, 0.07),limits = c(0.01, 0.99))  + 
-#   theme_grey() + guides(linetype = FALSE) +
-#   theme(plot.title = element_text(size = 15),
-#         legend.title = element_blank(),
-#         legend.text = element_text(size = 12),
-#         axis.title = element_text(size = 14))
-# print(grafico_alphas1_bias)
-# 
-# 
-# bias_coefs = data.frame(cbind(thetas1_rq_bias,thetas1_cq_bias,
-#                               thetas1_cq2_bias,thetas1_cq3_bias,thetas1_cq_3_bias,thetas1_cq_2_bias,
-#                               thetas1_cq8_bias,thetas1_cq16_bias,thetas1_cq_16_bias,thetas1_cq_8_bias))
-# ylab = TeX('Bias $\\hat{\\theta_1}(\\tau)$')
-# grafico_thetas1_bias = ggplot(bias_coefs, aes(x = tau.grid, y = value)) + 
-#   geom_line(aes(y = thetas1_rq_bias,linetype ='blank',color ='QR'),size=1.0) +
-#   geom_line(aes(y = thetas1_cq_bias,linetype ='solid',color ='SQR'),size=1.0)+
-#   geom_line(aes(y = thetas1_cq2_bias,linetype ='dotdash',color ='SQR_h*2'),size=1.0)+
-#   geom_line(aes(y = thetas1_cq3_bias,linetype ='dotdash',color ='SQR_h*4'),size=1.0)+
-#   geom_line(aes(y = thetas1_cq_3_bias,linetype ='dotdash',color ='SQR_h/4'),size=1.0)+
-#   geom_line(aes(y = thetas1_cq_2_bias,linetype ='dotted',color ='SQR_h/2'),size=1.0)+
-#   geom_line(aes(y = thetas1_cq8_bias,linetype ='dotdash',color ='SQR_h*8'),size=1.0)+
-#   geom_line(aes(y = thetas1_cq16_bias,linetype ='dotdash',color ='SQR_h*16'),size=1.0)+
-#   geom_line(aes(y = thetas1_cq_16_bias,linetype ='dotdash',color ='SQR_h/16'),size=1.0)+
-#   geom_line(aes(y = thetas1_cq_8_bias,linetype ='dotted',color ='SQR_h/8'),size=1.0)+
-#   geom_hline(yintercept = 0.0, color = 'yellow', size=1.3) +
-#   labs(x =xlab,y = ylab)  + 
-#   scale_x_continuous(breaks=seq(0.01, 0.99, 0.07),limits = c(0.01, 0.99))  + 
-#   theme_grey() + guides(linetype = FALSE) +
-#   theme(plot.title = element_text(size = 15),
-#         legend.title = element_blank(),
-#         legend.text = element_text(size = 12),
-#         axis.title = element_text(size = 14))
-# print(grafico_thetas1_bias)
-# #plot_grid(grafico_alphas0_bias,grafico_alphas1_bias,grafico_thetas1_bias,grafico_betas2_bias)
-# 
-# ### PLOTS vpq  - VARIANCE per quantile - - h, h*2, h*4, h*1/4, h*1/2
-#
-# 
-# xlab = TeX('$\\tau$')
-# 
-# ylab = TeX('Var $\\hat{\\alpha_0}(\\tau)$') 
-# grafico_alpha0_vpq = ggplot(coefs_alphas0_vpq, aes(x = tau.grid, y = value)) + 
-#   geom_line(aes(y = alphas0_rq_vpq,linetype ='blank',color ='QR'),size=1.0) +
-#   geom_line(aes(y = alphas0_cq_vpq, linetype ='solid',color ='SQR'),size=1.0)+
-#   geom_line(aes(y = alphas0_cq2_vpq, linetype ='dotdash',color ='SQR_h*2'),size=1.0)+
-#   geom_line(aes(y = alphas0_cq3_vpq, linetype ='dotdash',color ='SQR_h*4'),size=1.0)+
-#   geom_line(aes(y = alphas0_cq_3_vpq, linetype ='dotdash',color ='SQR_h/4'),size=1.0)+
-#   geom_line(aes(y = alphas0_cq_2_vpq, linetype ='dotted',color ='SQR_h/2'),size=1.0)+
-#   geom_line(aes(y = alphas0_cq8_vpq, linetype ='twodash',color ='SQR_h*8'),size=1.0)+
-#   geom_line(aes(y = alphas0_cq16_vpq, linetype ='twodash',color ='SQR_h*16'),size=1.0)+
-#   geom_line(aes(y = alphas0_cq_16_vpq, linetype ='twodash',color ='SQR_h/16'),size=1.0)+
-#   geom_line(aes(y = alphas0_cq_8_vpq, linetype ='dashed',color ='SQR_h/8'),size=1.0)+
-#   geom_hline(yintercept = 0, color = 'yellow', size=1.3) +
-#   labs(x =xlab,y = ylab) + #expand_limits(x=c(0, 1), y=c(-3,3)) +
-#   scale_x_continuous(breaks=seq(0.01, 0.99, 0.07),limits = c(0.01, 0.99))  + 
-#   #scale_y_log10() + 
-#   theme_grey() + guides(linetype = FALSE) +
-#   theme(plot.title = element_text(size = 15),
-#         legend.title = element_blank(),
-#         legend.text = element_text(size = 12),
-#         axis.title = element_text(size = 14))
-# print(grafico_alpha0_vpq)
-# 
-# ylab = TeX('Var $\\hat{\\alpha_1}(\\tau)$') 
-# grafico_alpha1_vpq = ggplot(coefs_alphas1_vpq, aes(x = tau.grid, y = value)) + 
-#   geom_line(aes(y = alphas1_rq_vpq,linetype ='blank',color ='QR'),size=1.0) +
-#   geom_line(aes(y = alphas1_cq_vpq, linetype ='solid',color ='SQR'),size=1.0)+
-#   geom_line(aes(y = alphas1_cq2_vpq, linetype ='dotdash',color ='SQR_h*2'),size=1.0)+
-#   geom_line(aes(y = alphas1_cq3_vpq, linetype ='dotdash',color ='SQR_h*4'),size=1.0)+
-#   geom_line(aes(y = alphas1_cq_3_vpq, linetype ='dotdash',color ='SQR_h/4'),size=1.0)+
-#   geom_line(aes(y = alphas1_cq_2_vpq, linetype ='dotted',color ='SQR_h/2'),size=1.0)+
-#   geom_line(aes(y = alphas1_cq8_vpq, linetype ='dotdash',color ='SQR_h*8'),size=1.0)+
-#   geom_line(aes(y = alphas1_cq16_vpq, linetype ='dotdash',color ='SQR_h*16'),size=1.0)+
-#   geom_line(aes(y = alphas1_cq_16_vpq, linetype ='dotdash',color ='SQR_h/16'),size=1.0)+
-#   geom_line(aes(y = alphas1_cq_8_vpq, linetype ='dotted',color ='SQR_h/8'),size=1.0)+
-#   geom_hline(yintercept = 0.0, color = 'yellow', size=1.3) +
-#   labs(x =xlab,y = ylab) + #expand_limits(x=c(0, 1), y=c(0.4,0.6)) + 
-#   scale_x_continuous(breaks=round(seq(0.01, 0.99, 0.07), 2),limits = c(0.01, 0.99))  + 
-#   #scale_y_continuous(breaks=seq(0.4,0.6,0.02),limits = c(0.46, 0.54))  +
-#   scale_y_log10() + 
-#   theme_grey() + guides(linetype = FALSE) +
-#   theme(plot.title = element_text(size = 15),
-#         legend.title = element_blank(),
-#         legend.text = element_text(size = 12),
-#         axis.title = element_text(size = 14))
-# print(grafico_alpha1_vpq)
-# 
-# ylab = TeX('Var $\\hat{\\theta_1}(\\tau)$')
-# grafico_beta1_vpq = ggplot(coefs_thetas1_vpq, aes(x = tau.grid, y = value)) + 
-#   geom_line(aes(y = thetas1_rq_vpq,linetype ='blank',color ='QR'),size=1.0) +
-#   geom_line(aes(y = thetas1_cq_vpq, linetype ='solid',color ='SQR'),size=1.,)+
-#   geom_line(aes(y = thetas1_cq2_vpq, linetype ='dotdash',color ='SQR_h*2'),size=1.0)+
-#   geom_line(aes(y = thetas1_cq3_vpq, linetype ='dotdash',color ='SQR_h*4'),size=1.0)+
-#   geom_line(aes(y = thetas1_cq_3_vpq, linetype ='dotdash',color ='SQR_h/4'),size=1.0)+
-#   geom_line(aes(y = thetas1_cq_2_vpq, linetype ='dotted',color ='SQR_h/2'),size=1.0)+
-#   geom_line(aes(y = thetas1_cq8_vpq, linetype ='dotdash',color ='SQR_h*8'),size=1.0)+
-#   geom_line(aes(y = thetas1_cq16_vpq, linetype ='dotdash',color ='SQR_h*16'),size=1.0)+
-#   geom_line(aes(y = thetas1_cq_16_vpq, linetype ='dotdash',color ='SQR_h/16'),size=1.0)+
-#   geom_line(aes(y = thetas1_cq_8_vpq, linetype ='dotted',color ='SQR_h/8'),size=1.0)+
-#   geom_hline(yintercept = 0.0, color = 'yellow', size=1.3) +
-#   labs(x =xlab,y = ylab) + # ggtitle(bquote(beta[1][tau]^{tau})) + 
-#   scale_x_continuous(breaks=seq(0.01, 0.99, 0.07),limits = c(0.01, 0.99))  + 
-#   scale_y_log10() + 
-#   theme_grey() + guides(linetype = FALSE) +
-#   theme(plot.title = element_text(size = 15),
-#         legend.title = element_blank(),
-#         legend.text = element_text(size = 12),
-#         axis.title = element_text(size = 14))
-# print(grafico_beta1_vpq)
-# #plot_grid(grafico_alpha0_vpq,grafico_alpha1_vpq,grafico_beta1_vpq,grafico_beta2_vpq)
-# 
-# options(scipen=999)
-# plot_grid(grafico_alphas0_mse,grafico_alphas0_bias,grafico_alpha0_vpq,
-#           grafico_alphas1_mse,grafico_alphas1_bias,grafico_alpha1_vpq,
-#           grafico_thetas1_mse,grafico_thetas1_bias,grafico_beta1_vpq,
-#           nrow = 3, ncol = 3, label_size = 8)
-#
-#
-# Yvec = Y[[j]][2:T]
-# Xmat = cbind(Y[[j]][1:(T-1)], Z[[j]][1:(T-1)])
-# qrfit = rq(Yvec~Xmat, tau = tau.grid)
-# 
-# plot(tau.grid, alpha0(tau.grid), type = 'l', col='blue', lwd=2, lty='dotted')
-# lines(tau.grid, coef(qrfit)[1,], lwd=2, col = rgb(0,0,0,.7))
-# 
-# plot(tau.grid, alpha1(tau.grid), type = 'l', col='blue', lwd=2, lty='dotted')
-# lines(tau.grid, coef(qrfit)[2,], lwd=2, col = rgb(0,0,0,.7))
-# 
-# plot(tau.grid, theta1(tau.grid), type = 'l', col='blue', lwd=2, lty='dotted')
-# lines(tau.grid, coef(qrfit)[3,], lwd=2, col = rgb(0,0,0,.7))
-# 
-# conquerfit = sapply(tau.grid, function(tau) conquer(Xmat,Yvec,tau=tau)$coeff)
-# plot(tau.grid, alpha0(tau.grid), type = 'l', col='blue', lwd=2, lty='dotted')
-# 
-# lines(tau.grid, conquerfit[1,], lwd=2, col = rgb(0,0,0,.7))
-# lines(tau.grid, A[,1,2], lwd=2, col = rgb(0,0,0,.7))
-# plot(tau.grid, alpha1, type = 'l', col='blue', lwd=2, lty='dotted')
-# lines(tau.grid, C[,2,2], lwd=2, col = rgb(1,0,0,.7))
-# 
-# plot(tau.grid, alpha1(tau.grid), type = 'l', col='blue', lwd=2, lty='dotted')
-# lines(tau.grid, conquerfit[2,], lwd=2, col = rgb(0,0,0,.7))
-# 
-# plot(tau.grid, theta1(tau.grid), type = 'l', col='blue', lwd=2, lty='dotted')
-# lines(tau.grid, conquerfit[3,], lwd=2, col = rgb(0,0,0,.7)) 
-
-# acf(Y[[j]], lwd=16, lend=3, col='gray')
-# pacf(Y[[j]], lwd=16, lend=3, col='gray') 
-# 
-# plot(Y[[j]][2:T]~Y[[j]][1:(T-1)], pch=16, col=rgb(0,0,0,.4))
-# plot(Y[[j]][2:T]~Z[[j]][1:(T-1)], pch=16, col=rgb(0,0,0,.4))
-# ts.plot(Y[[j]])
-# hist(Y[[j]], border=NA, breaks="FD", col='lightblue')
 
 ### SAVING MAIN RESULTS
 
@@ -1073,7 +785,7 @@ coefs_thetas1_vpq = data.frame(cbind(thetas1_rq_vpq, thetas1_cq_vpq,
                                thetas1_cq8_vpq))#,thetas1_cq16_vpq,thetas1_cq_16_vpq,thetas1_cq_8_vpq)
 
 
-path_outputs = "C:/Users/MIGUEL/OneDrive - UFRGS/Mestrado PPGEst/DISSERTAÇÃO/Novas Simulações/outputs_checkpoints/"
+path_outputs = "C:/Users/MIGUEL/OneDrive - UFRGS/Mestrado PPGEst/DISSERTAÃ‡ÃƒO/Novas SimulaÃ§Ãµes/outputs_checkpoints/"
 path_lambda = choice
 path_sample = as.character(T)
 path_write = paste(path_outputs, choice, sep="")
@@ -1095,9 +807,7 @@ write.csv(coefs_alphas0_bias, file= paste('coefs_alphas0_bias-n',path_sample,'.c
 write.csv(coefs_alphas1_bias, file= paste('coefs_alphas1_bias-n',path_sample,'.csv',sep=""), row.names=FALSE)
 write.csv(coefs_thetas1_bias, file= paste('coefs_thetas1_bias-n',path_sample,'.csv',sep=""), row.names=FALSE)
 # Global metrics
-write.csv(coefs_alphas0_mpq, file= paste('coefs_alphas0_mpq-n',path_sample,'.csv',sep=""))
-write.csv(coefs_alphas1_mpq, file= paste('coefs_alphas1_mpq-n',path_sample,'.csv',sep=""))
-write.csv(coefs_thetas1_mpq, file= paste('coefs_thetas_mpq-n',path_sample,'.csv',sep=""))
+write.csv(globals_df, file= paste('globals_df-n',path_sample,'.csv',sep=""))
 
 #Saving arrays for the estimated coefficients
 saveRDS(A, "A.rds")
@@ -1107,9 +817,9 @@ saveRDS(C3, "C4.rds")
 saveRDS(C_3, "C_4.rds")
 saveRDS(C_2, "C_2.rds")
 saveRDS(C8, "C8.rds")
-saveRDS(C16, "C16.rds")
-saveRDS(C_16, "C_16.rds")
-saveRDS(C_8, "C_8.rds")
+# saveRDS(C16, "C16.rds")
+# saveRDS(C_16, "C_16.rds")
+# saveRDS(C_8, "C_8.rds")
 #Atest <- readRDS("A.rds")
 
 end_time = Sys.time()
