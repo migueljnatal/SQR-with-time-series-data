@@ -1,6 +1,10 @@
+# SETTING WORKING DIRECTORIES - User must set their own directories in order write checkpoints for all outputs in the MC simulation
 setwd("C:/Users/MIGUEL/OneDrive - UFRGS/Mestrado PPGEst/DISSERTAÇÃO/Novas Simulações")
+path_outputs = "C:/Users/MIGUEL/OneDrive - UFRGS/Mestrado PPGEst/DISSERTAÇÃO/Novas Simulações/outputs_checkpoints/"
 
-start_time = Sys.time()
+# Commented lines of code are included in this script whether the user wants implement the study using other levels of bandwdiths or for plotting additional metrics
+
+start_time = Sys.time()                                 
 #install.packages('Rfast')
 #install.packages('urca')
 #install.packages('tseries')
@@ -27,23 +31,23 @@ source('choose_lambda.R')
 
 # GLOBAL VARIABLES - USER MUST CHOOSE THESE PARAMETERS
 nrep = 5000                                            # number of replications
-T = 1101                                               # sample size
-choice = 'hacovercos'                                  # choice of lambda function
+T = 1101                                               # sample size; must be the "actual" sample size + 100, wich is the number of discarded observations
+choice = 'hacovercos'                                  # choice of lambda function; other choices are available through the script 'choose_lambda.R'
 
 
 # Quantile levels
 tau.grid = seq(from=.01,to=.99, by=.02) 
 
-# Parameters for the kumar quantile functions v10, v01 and v00
+# Parameters for the beta quantile functions v10, v01 and v00
 {a10 = 1; b10 = 3; a01 = 5; b01 = 1; a00 = 3; b00 = 1}
 
-# Conditional quantile function of Y[t] given Y[t-1] = 1 and Z[t-1]=0
+# Conditional quantile function of Y[t] given Y[t-1] = 1 and X[t-1]=0
 v10 = function (tau) qbeta(tau, a10,b10)
 
-# Conditional quantile function of Y[t] given Y[t-1] = 0 and Z[t-1]=1
+# Conditional quantile function of Y[t] given Y[t-1] = 0 and X[t-1]=1
 v01 = function(tau) qbeta(tau,a01,b01)
 
-# Conditional quantile function of Y[t] given Y[t-1] = 0 and Z[t-1]=0 -- LAMBDAS <=> v00(\tau)
+# Conditional quantile function of Y[t] given Y[t-1] = 0 and X[t-1]=0 -- LAMBDAS <=> v00(\tau)
 
 lambda_dv_qbeta = function(tau,a10,b10,a01,b01){
   
@@ -78,7 +82,7 @@ v00_u = function(u) v00_init(u)/v00_init(1)
 v00_t = sapply(tau.grid,v00_u)
 
 
-# Conditional quantile function of Y[t] given Y[t-1] = 1 and Z[t-1]=1
+# Conditional quantile function of Y[t] given Y[t-1] = 1 and X[t-1]=1
 v11 = function(tau) v10(tau) + v01(tau) - v00_u(tau)
 
 v11_t = sapply(tau.grid,v11)
@@ -184,7 +188,7 @@ for(j in 1:nrep){
   sigma_z = min(sd(z), ((iqr_z)/1.34898))
   h[i,j] = h_scale*(1.06*sigma_z)/(length(Yvec[[j]])^(1/5))
   
-  # Demais niveis de $\zeta$ = h 'rule of thumb' como no paper do Artur
+  # Other levels of $\zeta$ = h 'rule of thumb' --> data-driven bandwidths
   h_3[i,j]        = h[i,j]/4
   h_2[i,j]        = h[i,j]/2
   h2[i,j]         = h[i,j]*2
@@ -785,7 +789,7 @@ coefs_thetas1_vpq = data.frame(cbind(thetas1_rq_vpq, thetas1_cq_vpq,
                                thetas1_cq8_vpq))#,thetas1_cq16_vpq,thetas1_cq_16_vpq,thetas1_cq_8_vpq)
 
 
-path_outputs = "C:/Users/MIGUEL/OneDrive - UFRGS/Mestrado PPGEst/DISSERTAÇÃO/Novas Simulações/outputs_checkpoints/"
+#path_outputs = "C:/Users/MIGUEL/OneDrive - UFRGS/Mestrado PPGEst/DISSERTAÇÃO/Novas Simulações/outputs_checkpoints/"
 path_lambda = choice
 path_sample = as.character(T)
 path_write = paste(path_outputs, choice, sep="")
