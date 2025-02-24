@@ -1,6 +1,6 @@
 # SETTING WORKING DIRECTORIES - User must set their own directories in order write checkpoints for all outputs in the MC simulation
-setwd("C:/Users/MIGUEL/OneDrive - UFRGS/Mestrado PPGEst/DISSERTAÇÃO/Novas Simulações")
-path_outputs = "C:/Users/MIGUEL/OneDrive - UFRGS/Mestrado PPGEst/DISSERTAÇÃO/Novas Simulações/outputs_checkpoints/"
+setwd("<YOUR_DIR>/")
+path_outputs = "<YOUR_DIR>/outputs_checkpoints/"
 
 # Commented lines of code are included in this script whether the user wants implement the study using other levels of bandwdiths or for plotting additional metrics
 
